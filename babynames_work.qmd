@@ -17,6 +17,14 @@ library(tidyverse)
 ```{r}
 x <- read_csv("data/i_names.csv", show_col_types = FALSE)
 
+glimpse(x)
+
+x |> select(year, sex, n, prop) |> filter(year >= 1900) |>
+    mutate(prop = prop * 1000000) |> 
+      summarize(sum_prop = sum(prop), .by = c(year, sex)) |>
+        ggplot(aes(x = year, y = sum_prop)) + 
+          geom_density()
+
  
 
 ```
